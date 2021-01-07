@@ -1,0 +1,38 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+body {
+    background: url('https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4558185.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.product-container {
+    border: 2px solid white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card-body {
+    margin: 5px 2px 5px 10px;
+    background-color: linen;
+}
+
+header {
+    background: whitesmoke;
+    color: white;
+}
