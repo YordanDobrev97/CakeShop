@@ -8,6 +8,7 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 
 import './custom.css';
 import AddProduct from './components/Products/AddProduct';
+import Details from './components/Products/Details';
 
 export default class App extends Component {
     render() {
@@ -15,6 +16,7 @@ export default class App extends Component {
             <Layout>
                 <Route exact path='/' component={Home} />
                 <Route path='/addProduct' component={AddProduct} />
+                <Route path='/details/:id' component={ Details }/>
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             </Layout>
         );

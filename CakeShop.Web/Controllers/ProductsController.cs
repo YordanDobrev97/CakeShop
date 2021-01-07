@@ -27,5 +27,12 @@ namespace CakeShop.Web.Controllers
             this.productsService.Add(input.Product, input.Price, input.Quantity, input.Image);
             return new JsonResult("Ok");
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Details(int id)
+        {
+            var product = this.productsService.Details(id);
+            return new JsonResult(product);
+        }
     }
 }

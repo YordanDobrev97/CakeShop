@@ -32,12 +32,13 @@ export class Home extends Component {
         return (
             <div className="product-container">
                 {this.state.products.map((product) => {
+                    const link = `/details/${product.id}`;
                     return (
                         <div className="card-body">
                             <img width="90" height="60" src={product.image} alt="product" />
                             <h5 className="card-title">{product.name}</h5>
                             <p className="card-text">{product.price}</p>
-                            <a href="#" className="btn btn-primary">Details</a>
+                            <a href={ link } className="btn btn-primary">Details</a>
                         </div>)
                 })}
             </div>

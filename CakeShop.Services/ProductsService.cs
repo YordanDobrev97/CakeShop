@@ -40,5 +40,20 @@
 
             return products;
         }
+
+        public ProductDetailsViewModel Details(int id)
+        {
+            var product = this.db.Products
+                .Where(x => x.Id == id)
+                .Select(x => new ProductDetailsViewModel
+                {
+                    Name = x.Name,
+                    Price = x.Price,
+                    Quantity = x.Quantity,
+                    Image = x.ImageUrl,
+                }).FirstOrDefault();
+
+            return product;
+        }
     }
 }
