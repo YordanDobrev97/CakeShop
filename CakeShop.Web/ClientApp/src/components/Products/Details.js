@@ -28,30 +28,35 @@ export default class Details extends Component {
             })
     }
 
+    addBasket = () => {
+        sessionStorage.setItem(`product${this.state.product.name}`, 
+            JSON.stringify(this.state.product));
+    }
+
     render() {
         if (!this.state.isLoading) {
             return <div>Loading...</div>
         }
 
         return (
-            <div class="container">
-                <div class="card">
-                    <div class="container-fliud">
-                        <div class="wrapper row">
-                            <div class="preview col-md-6">
+            <div className="container">
+                <div className="card">
+                    <div className="container-fliud">
+                        <div className="wrapper row">
+                            <div className="preview col-md-6">
 
-                                <div class="preview-pic tab-content">
-                                    <div class="tab-pane active" id="pic-1">
+                                <div className="preview-pic tab-content">
+                                    <div className="tab-pane active" id="pic-1">
                                         <img src={ this.state.product.image } />
                                     </div>
                                 </div>
                             </div>
                             <div class="details col-md-6">
-                                <h3 class="product-title">{ this.state.product.name }</h3>
+                                <h3 className="product-title">{ this.state.product.name }</h3>
 
-                                <h4 class="price">price: <span>$ { this.state.product.price }</span></h4>
-                                <div class="action">
-                                    <button class="add-to-cart btn btn-default" type="button">Add to cart</button>
+                                <h4 className="price">price: <span>$ { this.state.product.price }</span></h4>
+                                <div className="action">
+                                    <button onClick={ this.addBasket } className="add-to-cart btn btn-default" type="button">Add to cart</button>
                                 </div>
                             </div>
                         </div>
