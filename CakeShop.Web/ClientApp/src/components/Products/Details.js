@@ -29,8 +29,11 @@ export default class Details extends Component {
     }
 
     addBasket = () => {
+        const product = { ...this.state.product, count: 1 };
+
+        console.log(product);
         sessionStorage.setItem(`product${this.state.product.name}`, 
-            JSON.stringify(this.state.product));
+            JSON.stringify(product));
     }
 
     render() {

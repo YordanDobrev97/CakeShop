@@ -7,6 +7,7 @@ export default class Basket extends Component {
         this.state = {
             products: [],
             isLoading: false,
+            totalPrice: 0,
         }
     }
 
@@ -14,15 +15,58 @@ export default class Basket extends Component {
         const storageProducts = { ...sessionStorage };
 
         const result = [];
+        let totalPrice = 0;
         Object.entries(storageProducts).forEach(index => {
-            const product = index[1];
-            result.push(JSON.parse(product))
+            const product = JSON.parse(index[1]);
+            totalPrice += product.price;
+            result.push(product);
         });
 
         this.setState(prevState => ({
             products: this.state.products.concat(result),
             isLoading: true,
+            totalPrice: totalPrice,
         }));
+    }
+
+    increaseProductQuantity = (e) => {
+        const id = e.target.id;
+        const products = [...this.state.products];
+        const currentProduct = products.find(x => x.id == id);
+
+        if (!currentProduct.hasOwnProperty("oldPrice")) {
+            currentProduct.oldPrice = currentProduct.price;
+        }
+
+        const price = this.state.totalPrice + currentProduct.oldPrice;
+        currentProduct.price *= 2;
+        currentProduct.count++;
+        const index = products.indexOf(currentProduct);
+
+        products.splice(index, 1);
+        this.setState({
+            products: [...this.state.products],
+            totalPrice: price,
+        })
+    }
+
+    decreaseProductQuantity = (e) => {
+        const id = e.target.id;
+        const products = [...this.state.products];
+        const currentProduct = products.find(x => x.id == id);
+
+        if (currentProduct.price / 2 > 0 && currentProduct.count - 1 > 0) {
+            const price = this.state.totalPrice - currentProduct.oldPrice;
+            currentProduct.price /= 2;
+            currentProduct.count--;
+            const index = products.indexOf(currentProduct);
+
+            products.splice(index, 1);
+            this.setState({
+                products: [...this.state.products],
+                totalPrice: price,
+            })
+        }
     }
 
     render() {
@@ -30,10 +74,10 @@ export default class Basket extends Component {
             return <div>Loading...</div>
         }
 
-        console.log(this.state.products)
         return (
             <div className="card-body">
                 {this.state.products.map(product => {
+                    console.log(product);
                     return (<div className="row">
                         <div className="col-12 col-sm-12 col-md-2 text-center">
                             <img className="img-responsive" src={product.image} alt="prewiew" width="120" height="80" />
@@ -43,20 +87,14 @@ export default class Basket extends Component {
                         </div>
                         <div className="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
                             <div className="col-3 col-sm-3 col-md-6 text-md-right">
-                                <h6><strong>{product.price} <span class="text-muted">x</span></strong></h6>
+                                <h6><strong>Price: {product.price}</strong></h6>
                             </div>
                             <div className="col-4 col-sm-4 col-md-4">
                                 <div className="quantity">
-                                    <input type="button" value="+" className="plus" />
-                                    <input type="number" step="1" max="99" min="1" value="1" title="Qty" className="qty"
-                                        size="4" />
-                                    <input type="button" value="-" className="minus" />
+                                    <input type="button" id={product.id} onClick={this.increaseProductQuantity} value="+" className="plus" />
+                                    <input disabled type="number" step="1" max="99" min="1" value={product.count} title="Qty" className="qty" />
+                                    <input type="button" id={product.id} onClick={this.decreaseProductQuantity} value="-" className="minus mb-md-3" />
                                 </div>
-                            </div>
-                            <div className="col-2 col-sm-2 col-md-2 text-right">
-                                <button type="button" className="btn btn-outline-danger btn-xs">
-                                    <i className="fa fa-trash" aria-hidden="true"></i>
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -68,7 +106,7 @@ export default class Basket extends Component {
                     <div className="pull-right">
                         <a href="" className="btn btn-success pull-right">Checkout</a>
                         <div className="pull-right">
-                            Total price: <b>$</b>
+                            Total price: <b>${this.state.totalPrice}</b>
                         </div>
                     </div>
                 </div>

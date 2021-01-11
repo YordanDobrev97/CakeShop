@@ -47,6 +47,7 @@
                 .Where(x => x.Id == id)
                 .Select(x => new ProductDetailsViewModel
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     Price = x.Price,
                     Quantity = x.Quantity,
