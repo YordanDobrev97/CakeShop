@@ -2,7 +2,7 @@ namespace CakeShop.Web
 {
     using CakeShop.Data;
     using CakeShop.Services;
-    using CakeShop.Web.Models;
+    using CakeShop.Data.Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;

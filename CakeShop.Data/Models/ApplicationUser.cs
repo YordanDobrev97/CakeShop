@@ -1,4 +1,4 @@
-﻿namespace CakeShop.Web.Models
+﻿namespace CakeShop.Data.Models
 {
     using IdentityUser = Microsoft.AspNetCore.Identity.IdentityUser;
 
