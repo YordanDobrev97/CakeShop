@@ -1,51 +1,42 @@
-﻿import React, { Component } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import Pagination from '../Pagination/Pagination';
 import Product from './Product';
 
-export default class Products extends Component {
-    constructor(props) {
-        super(props);
+const Products = function () {
+    const [loading, setLoading] = useState(false);
+    const [skip, setSkip] = useState(0);
+    const [take, setTake] = useState(8);
+    const [products, setProducts] = useState([]);
 
-        this.state = {
-            isLoading: false,
-            products: [],
-            skip: 0,
-            take: 8,
-        }
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         fetch('https://localhost:44326/api/products/all')
             .then(r => r.json())
             .then(products => {
-                this.setState({
-                    products: products,
-                    isLoading: true,
-                })
+                setProducts(products);
+                setLoading(true);
             })
+    }, []);
+
+    if (!loading) {
+        return <div>Loading...</div>
     }
 
-    render() {
-        if (!this.state.isLoading) {
-            return (
-                <div>Loading...</div>
-            )
-        }
-        //skip -> (productPerPage * currentPage) - productPerPage
-        const listProducts = this.state.products.slice(this.state.skip, this.state.take);
-
-        return (
-            <div className="product-container">
-                <div className="container">
-                    <div className="row">
-                        {listProducts.map((product) => {
-                            const link = `/details/${product.id}`;
-                            return <Product link={link} product={product} />
-                        })}
-                    </div>
+    //skip -> (productPerPage * currentPage) - productPerPage
+    const listProducts = products.slice(skip, take);
+    return (
+        <div className="product-container">
+            <div className="container">
+                <div className="row">
+                    {listProducts.map((product) => {
+                        const link = `/details/${product.id}`;
+                        return <Product key={product.id} link={link} product={product} />
+                    })}
                 </div>
-                <Pagination productsCount={ this.state.products.length }/>
             </div>
-        );
-    }
+
+            <Pagination productsCount={products.length} />
+        </div>
+    )
 }
+
+export default Products;

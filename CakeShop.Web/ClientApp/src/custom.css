@@ -2,6 +2,7 @@
 
 a {
     color: #0366d6;
+    font-size: 18px;
 }
 
 code {
@@ -16,13 +17,13 @@ code {
 
 body {
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto, cover;
     font-family: 'Roboto', sans-serif;
 }
 
 body::after {
     content: "";
-    background: url('https://c1.wallpaperflare.com/preview/781/630/380/birthday-cake-celebration-color.jpg');
+    background: url('https://i.ytimg.com/vi/qtlhdIfojmc/maxresdefault.jpg') no-repeat center;
     opacity: 0.9;
     top: 0;
     left: 0;
@@ -30,12 +31,6 @@ body::after {
     right: 0;
     position: absolute;
     z-index: -1;
-}
-
-.product-container {
-    /*width: 100%;*/
-    /*justify-content: center;
-    flex-wrap: wrap;*/
 }
 
 .about-container {
@@ -54,8 +49,11 @@ body::after {
     margin-top: 20px;
     text-align: center;
 }
+
 .about-container p {
     font-weight: bold;
+    color: deeppink;
+    font-size: 24px;
 }
 
 .card-body {
@@ -117,6 +115,7 @@ ul.dropdown-cart {
         }
 
 h1 {
-    color: white;
+    font-weight: bold;
     text-align: center;
+    font-family: monospace;
 }

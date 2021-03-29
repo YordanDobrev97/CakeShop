@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 
-export default function Product(props) {
+const Product = function (props) {
     return (
         <div className="col-md-3">
             <div className="card-body ">
@@ -12,3 +12,5 @@ export default function Product(props) {
         </div>
     )
 }
+
+export default Product;

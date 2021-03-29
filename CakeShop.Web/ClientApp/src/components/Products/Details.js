@@ -1,48 +1,29 @@
-﻿import React, { Component } from 'react';
+﻿import React, { useState, useEffect } from 'react';
+import { withRouter, useParams } from "react-router-dom";
 
 import './style.css';
 
-export default class Details extends Component {
-    constructor(props) {
-        super(props);
+const Details = function () {
+    const { id } = useParams();
 
-        this.state = {
-            product: '',
-            isLoading: false,
-        }
-    }
+    const [loading, setLoading] = useState(false);
+    const [product, setProduct] = useState(null);
 
-
-    componentDidMount() {
-        const location = window.location.href;
-        const lastIndex = location.lastIndexOf('/');
-        const id = location.substring(lastIndex + 1);
-
+    useEffect(() => {
         fetch('https://localhost:44326/api/products/details/' + id)
             .then(r => r.json())
             .then(result => {
-                this.setState({
-                    product: result,
-                    isLoading: true,
-                })
+                setProduct(result);
+                setLoading(true);
             })
+    }, []);
+
+    if (!loading) {
+        return <div>Loading...</div>
     }
 
-    addBasket = () => {
-        const product = { ...this.state.product, count: 1 };
-
-        console.log(product);
-        sessionStorage.setItem(`product${this.state.product.name}`, 
-            JSON.stringify(product));
-    }
-
-    render() {
-        if (!this.state.isLoading) {
-            return <div>Loading...</div>
-        }
-
-        return (
-            <div className="container">
+    return (
+        <div className="container">
                 <div className="card">
                     <div className="container-fliud">
                         <div className="wrapper row">
@@ -50,16 +31,16 @@ export default class Details extends Component {
 
                                 <div className="preview-pic tab-content">
                                     <div className="tab-pane active" id="pic-1">
-                                        <img src={ this.state.product.image } />
+                                        <img src={ product.image } />
                                     </div>
                                 </div>
                             </div>
                             <div class="details col-md-6">
-                                <h3 className="product-title">{ this.state.product.name }</h3>
+                                <h3 className="product-title">{ product.name }</h3>
 
-                                <h4 className="price">price: <span>$ { this.state.product.price }</span></h4>
+                                <h4 className="price">price: <span>$ {product.price }</span></h4>
                                 <div className="action">
-                                    <button onClick={ this.addBasket } className="add-to-cart btn btn-default" type="button">Add to cart</button>
+                                    <button /*onClick={ this.addBasket }*/ className="add-to-cart btn btn-default" type="button">Add to cart</button>
                                 </div>
                             </div>
                         </div>
@@ -67,5 +48,6 @@ export default class Details extends Component {
                 </div>
             </div>
         )
-    }
 }
+
+export default withRouter(Details);
