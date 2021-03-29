@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
-import About from './About/About';
+﻿import React, { Component } from 'react';
+import Pagination from '../Pagination/Pagination';
+import Product from './Product';
 
-export class Home extends Component {
+export default class Products extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isLoading: false,
             products: [],
+            skip: 0,
+            take: 8,
         }
     }
 
@@ -15,7 +18,6 @@ export class Home extends Component {
         fetch('https://localhost:44326/api/products/all')
             .then(r => r.json())
             .then(products => {
-                console.log(products);
                 this.setState({
                     products: products,
                     isLoading: true,
@@ -29,21 +31,20 @@ export class Home extends Component {
                 <div>Loading...</div>
             )
         }
+        //skip -> (productPerPage * currentPage) - productPerPage
+        const listProducts = this.state.products.slice(this.state.skip, this.state.take);
 
         return (
             <div className="product-container">
-                <div>
-                    <h1>Welcome to CakeShop</h1>
-                </div>
-
                 <div className="container">
                     <div className="row">
-                        <div className="col text-center m-md-3">
-                            <a href="/products" className="btn btn-light">Products</a>
-                        </div>
+                        {listProducts.map((product) => {
+                            const link = `/details/${product.id}`;
+                            return <Product link={link} product={product} />
+                        })}
                     </div>
                 </div>
-                <About />
+                <Pagination productsCount={ this.state.products.length }/>
             </div>
         );
     }

@@ -104,7 +104,7 @@ export default class Basket extends Component {
 
                 <div className="card-footer">
                     <div className="pull-right">
-                        <a href="" className="btn btn-success pull-right">Checkout</a>
+                        <button className="btn btn-success pull-right">Buy</button>
                         <div className="pull-right">
                             Total price: <b>${this.state.totalPrice}</b>
                         </div>
